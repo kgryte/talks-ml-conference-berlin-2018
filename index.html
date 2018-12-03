@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>Talk | ML Conference Berlin, 2018 | Machine Learning in the Browser</title>
+
+	<meta name="description" content="Machine learning in a web browser?! Yes, you read that correctly! Machine learning is typically regarded as the purview of traditional scientific computing environments such as Python and MATLAB. However, recent advances in web technologies are rapidly opening a new frontier for machine learning which extends beyond the desktop and into your browser. In this session, I'll discuss the current state-of-the-art for machine learning in the browser and introduce libraries for high-performance linear algebra, statistical computing, and neural networks. I'll highlight how changes in web standards are facilitating the rise of these libraries and thus accelerating the adoption of browser-based machine learning. I'll follow with lessons learned while implementing machine learning algorithms for use in web applications, discussing common implementation mistakes, portability issues, and how to maximize performance. And finally, I'll conclude by offering insight into how you can take advantage of the next big machine learning revolution, all within your browser!">
+	<meta name="author" content="Athan Reines">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+	<!-- Icons -->
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+	<link rel="manifest" href="manifest.json">
+	<link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="theme-color" content="#ffffff">
+
+	<!-- Facebook Open Graph -->
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="stdlib">
+	<meta property="og:url" content="https://stdlib.io/">
+	<meta property="og:title" content="A standard library for JavaScript and Node.js.">
+	<meta property="og:description" content="stdlib is a standard library for JavaScript and Node.js, with an emphasis on numeric computing.">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:image" content="">
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content="A standard library for JavaScript and Node.js.">
+	<meta name="twitter:site" content="@stdlibjs">
+	<meta name="twitter:url" content="https://stdlib.io/">
+	<meta name="twitter:title" content="stdlib">
+	<meta name="twitter:description" content="stdlib is a standard library for JavaScript and Node.js, with an emphasis on numeric computing.">
+	<meta name="twitter:image" content="">
+
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="css/grid.css">
+	<link rel="stylesheet" href="css/font-awesome.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/white.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Code syntax highlighting -->
+	<link rel="stylesheet" href="css/code/zenburn.css">
+
+	<!-- Equation rendering -->
+	<link rel="stylesheet" href="js/lib/katex/katex.css">
+	<script defer src="js/lib/katex/katex.min.js"></script>
+	<script defer src="js/lib/katex/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+
+	<!-- Printing and PDF exports -->
+	<script src="js/lib/reveal/pdf.js"></script>
+
+	<!--[if lt IE 9]>
+	<script src="js/lib/reveal/html5shiv.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+	<header>
+		<a href="https://github.com/stdlib-js/stdlib"><img src="img/long_logo_white.svg" alt="stdlib"></a>
+	</header>
+
+	<div class="reveal">
+
+		<!-- Any section element inside of this container is displayed as a slide -->
+		<div class="slides">
+
+			<section id="title-slide" class="center">
+				<h1>Machine Learning in the Browser</h1>
+
+				<aside class="notes">
+
+				</aside>
+			</section>
+
+			<section id="pre-splash" class="center">
+				<aside class="notes">
+					(next slide)
+				</aside>
+			</section>
+
+			<section id="splash" class="center" data-transition="fade-out">
+				<div>
+					<a href="https://github.com/stdlib-js/stdlib"><img src="img/long_logo_white.svg" alt="stdlib" class="undecorated" height="35%" width="35%"></a>
+				</div>
+				<div>
+					<small><a href="https://github.com/kgryte"><i class="fa fa-github"></i> Athan Reines</a> | <a href="https://twitter.com/kgryte"><i class="fa fa-twitter"></i> @kgryte</a> | <a href="https://twitter.com/stdlibjs"><i class="fa fa-twitter"></i> @stdlibjs</a></small>
+				</div>
+				<aside class="notes">
+					<p>
+						My name is Athan Reines, and I work full-time on the open-source project, stdlib, a standard library for JavaScript and Node.js, with an emphasis on <strong>numerical</strong> and <strong>scientific</strong> computing applications, including machine learning.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<aside class="notes">
+					(next slide)
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Overview</h2>
+
+				<div class="row">
+					<ul class="column column-3">
+						&nbsp;
+					</ul>
+					<ol class="column column-8">
+						<li class="fragment">Intro</li>
+						<li class="fragment">TODO</li>
+						<li class="fragment">Conclusions</li>
+					</ol>
+				</div>
+
+				<aside class="notes">
+					<p>
+						The talk overview is as follows...
+					</p>
+					<ul>
+   						<li>
+   							First, I will TODO...
+   						</li>
+   						<li>
+   							And finally, I will offer some conclusions and additional resources you can use to get started running machine learning algorithms in the browser.
+   						</li>
+   					</ul>
+					<p>
+						If I move too quickly, this talk is on-line, <strong>with notes</strong>, so you can revisit during and after this conference.
+					</p>
+					<p>
+						Simply go to my GitHub page, or follow me on Twitter where I'll tweet a link to the talk slides.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<aside class="notes">
+					(next slide)
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Why machine learning in the browser?</h2>
+
+				<ul>
+					<li class="fragment">Privacy</li>
+					<li class="fragment">Low latency</li>
+					<li class="fragment">Offline</li>
+					<li class="fragment">Power efficient</li>
+					<li class="fragment">Direct access to sensor data</li>
+				</ul>
+
+				<aside class="notes">
+					<p>
+						Why is machine learning in the browser exciting?
+					</p>
+					<p>
+						Running machine learning algorithms in the browser, and, in particular, incremental machine learning algorithms, allows for model <strong>training</strong> and <strong>prediction</strong>/<strong>classification</strong> to happen concurrently. I don't need to decouple these two aspects: training and prediction.
+					</p>
+					<p>
+						Meaning, in practice, for particular types of problems, I do not need dedicated infrastructure or processes/threads for training and separate infrastructure for prediction.
+					</p>
+					<p>
+						Often, incremental algorithms have low memory footprints, making them suitable for resource limited devices.
+					</p>
+					<p>
+						Why is this important? For the following reasons...
+					</p>
+					<p>
+						Privacy. Running machine learning algorithms in browser environments allows data to stay on-device. For example, the Apple Watch has an API which allows you to access heart beat data. With incremental machine learning, I can train a model (i.e., learn a user's "normal" heart beat pattern) and then detect when a heart beat, or set of heart beats, no longer fits this pattern. In this scenario, I never have to send this data to remote servers.
+					</p>
+					<p>
+						Because I don't have to send data to remote servers, analysis has low latency, works offline, and can be more power efficient.
+					</p>
+					<p>
+						Finally, as analysis can occur on-device (or using newer buzzword terminology, at the "edge"), we have direct access to all device sensor data, which removes the need for often complex device data serialization and de-serialization logic.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<aside class="notes">
+					To help motivate machine learning use cases, let us consider some real-world datasets...
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Example Datasets</h2>
+
+				<ul>
+					<li class="fragment">Mouse/cursor movements</li>
+					<li class="fragment">Scrolling</li>
+					<li class="fragment">Clicks</li>
+					<li class="fragment">Sensors</li>
+					<li class="fragment">Monitoring</li>
+				</ul>
+
+				<aside class="notes">
+					<p>
+						In browser environments, we have data streams such as mouse and cursor movements, scrolling, and "clicks".
+					</p>
+					<p>
+						With modern web APIs, we have access to sensor data, such as device orientation, temperature, and ambient lighting; all data which is being continuously recorded.
+					</p>
+					<p>
+						And finally, we have monitoring data, such as logs of failed HTTP/S requests, application errors, et cetera.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Use Cases</h2>
+
+				<ul>
+					<li class="fragment">Forecasting</li>
+					<li class="fragment">Anomalies</li>
+					<li class="fragment">Clustering</li>
+				</ul>
+
+				<aside class="notes">
+					<p>
+						What can machine learning in browser environments allow you to do?
+					</p>
+					<p>
+						For the UI interaction data we discussed in the previous slide, such as cursor movement and scrolling, we can generate a prediction as to what resource a user will most likely need next, allowing us to create what would feel like a faster and more responsive UI.
+					</p>
+					<p>
+						One example I have seen in a real-world application is tracking cursor movement and, based on (x,y) coordinates over time, training a model to predict which button a user will click next, causing the desired resource to be fetched before a user actually clicks the button, and thereby leading to a more instantaneous experience.
+					</p>
+					<p>
+						Another classic use case is anomaly detection, such as detecting a malfunctioning system or fraudulent activity. In this classification task, we want to detect when a datum, or set of datums, is different than the rest.
+					</p>
+					<p>
+						The sooner you are able to classify new data as "anomalous", the sooner you can fix a potential problem.
+					</p>
+					<p>
+						A third use case is clustering, which is the process of assigning groups.
+					</p>
+					<p>
+						As an example, we could collect device performance metrics and identify different application "states", such as resource intensive, idle, et cetera.
+					</p>
+					<p>
+						The number of states and how frequently they are occupied could be informative for on-device resource planning and optimization.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Why JavaScript?</h2>
+
+				<aside class="notes">
+					<p>
+						At this point, we should ask: okay, well, machine learning is useful, but why do any of this in JavaScript? Don't other languages exist which are better suited to the task? And don't the advantages of those other languages outweigh any potential benefits of running machine learning algorithms in browser environments?
+					</p>
+					<p>
+						As a practitioner who has written and used machine learning algorithms in other languages, I can confidently say that JavaScript is as equally qualified as any of those other languages, such as R and Python, for machine learning tasks.
+					</p>
+					<p>
+						However, the stigma that JavaScript is <strong>not</strong> suitable for math (and, by association, machine learning) persists, so I would like to take a moment to dispel a couple of myths...
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Myths</h2>
+
+				<ul>
+					<li class="fragment">Performance</li>
+					<li class="fragment">Incompatibility</li>
+				</ul>
+
+				<aside class="notes">
+					<p>
+						The first myth is poor performance. As part of our work on stdlib, we have run the benchmarks. You can run them yourself. They are publicly available.
+					</p>
+					<p>
+						JavaScript environments are just as fast as, and more often than not, faster than, Python and easily faster than R.
+					</p>
+					<p>
+						Modern JavaScript environments are highly optimized and continually improving. With WebAssembly and Node.js native add-ons, reaching near-native speed in JavaScript environments is readily achievable.
+					</p>
+					<p>
+						The second myth is that JavaScript is somehow incompatible with mathematical computation.
+					</p>
+					<p>
+						The argument in support of this myth typically goes something like single-threaded, something, something, floating-point, something, something, 64-bit integers.
+					</p>
+					<p>
+						What is clear about the people making this argument is that they have not used other languages for scientific computing and machine learning, because many of the arguments used against JavaScript apply equally to other languages used for mathematical computation.
+					</p>
+					<p>
+						People can, and, more importantly, <strong>do</strong> write robust and performant mathematical code in JavaScript.
+					</p>
+					<p>
+						Personally, I can point to stdlib and the fact that we've implemented literally thousands of mathematical functions in JavaScript and have not encountered any overwhelming issues due to the language itself.
+					</p>
+					<p>
+						This said, yes, some languages have syntactical features more amenable to terser code (e.g., operator overloading), but the lack of these features does not preclude math algorithms from being implemented.
+					</p>
+					<p>
+						In fact, e.g., C suffers from similar operator overloading limitations and no one who believes the "JavaScript cannot do math" myth seems to believe the same about C.
+					</p>
+					<p>
+						In short, many of those who say math cannot be done in JavaScript seem to have various preconceptions which are not grounded in reality and most likely have never written mathematical libraries.
+					</p>
+					<p>
+						The <strong>primary</strong> reason why people do not currently do mathematical computation in JavaScript is that other ecosystems already have a critical mass of libraries and frameworks for doing mathematical computation.
+					</p>
+					<p>
+						The issue is not one of technical limitations, but one of community support--a problem that myself and colleagues are working to address with stdlib.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Examples</h2>
+
+				<aside class="notes">
+					<p>
+						To help dispel the aforementioned myths, let's now turn to some examples demonstrating machine learning in JavaScript, and not just any machine learning, but <strong>real-time machine learning</strong>.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<aside class="notes">
+					(next slide)
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Anomaly Detection</h2>
+
+				<aside class="notes">
+					<p>
+						The first example is real-time anomaly detection.
+					</p>
+					<p>
+						To help structure the example, I've prepared an interactive Observable notebook which steps through an analysis of network sensor data.
+					</p>
+					<p>
+						For the purposes of this talk, the sensor data is static; however, all the analytical components shown in the notebook are amenable to real-time analysis, with each analytical component being an incremental accumulator which accepts data as it arrives.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Clustering</h2>
+
+				<aside class="notes">
+					<p>
+						The second example is real-time clustering.
+					</p>
+					<p>
+						Similar to the previous example, I've prepared an interactive Observable notebook which steps through an analysis of simulated data.
+					</p>
+					<p>
+						For the purposes of this talk, I chose to use simulated data as we have control over the data's generation and are able to know the true underlying state of the simulated system.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Regression</h2>
+
+				<aside class="notes">
+					<p>
+						The third example is real-time regression. See stdlib.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Classification</h2>
+
+				<aside class="notes">
+					<p>
+						The fourth example is real-time classification. See stdlib.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<aside class="notes">
+					(next slide)
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Tips and Tricks</h2>
+
+				<ul>
+					<li class="fragment">Simulation</li>
+					<li class="fragment">Exploratory Data Analysis</li>
+					<li class="fragment">Data Structures</li>
+					<ul>
+						<li class="fragment">ndarray</li>
+						<li class="fragment">circular buffers</li>
+						<li class="fragment">trees</li>
+					</ul>
+					<li class="fragment">Algorithms</li>
+				</ul>
+
+				<aside class="notes">
+					<p>
+						So...tips and tricks. The following tips are generally applicable regardless of whether a machine learning algorithm is written and used in JavaScript.
+					</p>
+					<p>
+						The first tip is to use <strong>simulation</strong> to generate synthetic datasets to run against machine learning algorithms so you better understand an algorithm's capabilities and limitations.
+					</p>
+					<p>
+						Next, <strong>always</strong>, <strong>always</strong>, <strong>always</strong> perform exploratory data analysis.
+					</p>
+					<p>
+						This means exploring your data by plotting and performing basic analyses in order to get a "feel" for your data and to test any basic assumptions (e.g., as we did when testing that the network sensor data is normally distributed).
+					</p>
+					<p>
+						Next, while true in general, but especially for real-time machine learning, what makes algorithms performant are two things.
+					</p>
+					<p>
+						The first is using the right data structure.
+					</p>
+					<p>
+						One such data structure is n-dimensional arrays (ndarrays), which are single-segment contiguous blocks of memory. These data structures allow for more efficient cache optimization.
+					</p>
+					<p>
+						Another common data structure is a circular buffer. While the textbook definition is simple, these need to be implemented carefully in order to avoid poor memory management, especially when implementing them in JavaScript.
+					</p>
+					<p>
+						Certain real-time algorithms require specialized tree data structures, such as quantile approximation.
+					</p>
+					<p>
+						The second is using the right algorithm.
+					</p>
+					<p>
+						One example where using the right algorithm is critical is quantile approximation. A naive approach would require storing all data in memory and sorting the data each time a new data arrives.
+					</p>
+					<p>
+						A better approach is use an approximate method which uses a tree data structure and an acceptable error rate.
+					</p>
+					<p>
+						In batch analysis, especially for one-off analyses, we can be okay using naive algorithms or less efficient data structures; however, in the context of real-time statistical analysis and machine learning within web applications, this is not viable.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<aside class="notes">
+					(next slide)
+				</aside>
+			</section>
+
+			<section class="center" data-transition="fade-in fade-out" data-transition-speed="default">
+				<h2 class="no-text-transform">Conclusions</h2>
+
+				<div class="row">
+					<ul class="column column-3">
+						&nbsp;
+					</ul>
+					<ul class="column column-8">
+						<li class="fragment">JavaScript</li>
+						<li class="fragment">Data Structures</li>
+						<li class="fragment">Algorithms</li>
+					</ul>
+				</div>
+
+				<aside class="notes">
+					<p>
+						There are 3 points I want you to remember from this talk...
+					</p>
+					<ol>
+						<li>
+							First, JavaScript is perfectly suitable for mathematical computation and machine learning. And not only is machine learning in JavaScript and browser environments possible, but doing so introduces new types of machine learning applications, which offer better data privacy, better performance, and better resource utilization. In the words of Brendan Eich, "Always bet on JavaScript".
+						</li>
+						<li>
+							Second, machine learning algorithms, especially real-time machine learning algorithms, require using the right data structure, regardless of what language they are implemented in.
+						</li>
+						<li>
+							Third, machine learning algorithms require using the right algorithm.
+						</li>
+					</ol>
+				</aside>
+			</section>
+
+			<section class="center">
+				<aside class="notes">
+					(next slide)
+				</aside>
+			</section>
+
+			<section class="center" data-transition="fade-in fade-out" data-transition-speed="default">
+				<h2 class="no-text-transform">Thank you!</h2>
+
+				<aside class="notes">
+
+				</aside>
+			</section>
+
+			<section class="center">
+				<div>
+					<a href="https://github.com/stdlib-js/stdlib"><img src="img/hex_sticker_black.svg" alt="stdlib" class="undecorated"></a>
+				</div>
+
+				<p>
+					<small><a href="https://github.com/stdlib-js/stdlib"><i class="fa fa-github"></i> https://github.com/stdlib-js/stdlib</a></small>
+					<br>
+					<small><a href="https://www.patreon.com/athan"><i class="fa fa-bitcoin"></i> https://www.patreon.com/athan</a></small>
+				</p>
+
+				<aside class="notes">
+					<p>
+						If you want to find more machine learning examples, be sure to see stdlib, a standard library for Node.js and JavaScript, with an emphasis on scientific computing, where we have additional resources and many examples.
+					</p>
+					<p>
+						If you want stickers, come find me!
+					</p>
+				</aside>
+			</section>
+
+			<section>
+				<!-- Add blank slide to separate main presentation from appendix -->
+				<aside class="notes">
+					Intentionally left blank.
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2>Appendix</h2>
+			</section>
+
+			<section class="center">
+				<!-- Intentionally many lines -->
+				<pre><code class="hljs javascript" contenteditable>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				</code></pre>
+				<aside class="notes">
+					Slide for code editing.
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Machine Learning</h2>
+
+				<aside class="notes">
+					<p>
+						Machine learning is applied mathematics and statistics and largely resides in the domain of computer science.
+					</p>
+					<p>
+						In contrast to the field of statistics, where we focus on mathematical formulas, the derivation of robust estimators, and developing mathematical techniques for modeling problem domains...
+					</p>
+					<p>
+						...in computer science, we focus less on mathematical purity and more on the practical aspects of writing algorithms which can run efficiently and with high performance and give us results which are not perfect, but "good enough".
+					</p>
+					<p>
+						The primary aim of machine learning is to find patterns in data, to find the proverbial signal in the noise, via numerical computation.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Models</h2>
+
+				<p class="fragment">
+					$$y = a_nx_n + a_{n-1}x_{n-1} + \cdots + a_0x_0 + b$$
+				</p>
+
+				<aside class="notes">
+					<p>
+						To describe those patterns we want to find, we <em>formulate</em> and <em>train</em> <strong>models</strong>.
+					</p>
+					<p>
+						A model is a mathematical formulation summarizing the nature of, and describing the relationship between, data variables.
+					</p>
+					<p>
+						Models serve as the statistical foundation for machine learning.
+					</p>
+					<p>
+						In order for machine learning algorithms to find patterns in data, we must "train" (or "teach") machine learning algorithms as to what those patterns are.
+					</p>
+					<p>
+						In a sense, machine learning algorithms "learn" the models used to describe particular patterns. That learning often comes in the form of learning specific values of coefficients within an equation.
+					</p>
+					<p>
+						In this equation, those coefficients would be a_n, a_{n-1}, a_0, et cetera.
+					</p>
+					<p>
+						As a more concrete example...
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">What will be the temperature tomorrow?</h2>
+
+				<div class="row">
+					<p class="fragment column column-4" style="padding-top: 0.9em">
+						$$t_{n+1} = t_{n}$$
+					</p>
+					<p class="fragment column column-4">
+						$$t_{n+1} = \frac{1}{7} \sum_{i=n-6}^{n} t_i$$
+					</p>
+					<p class="fragment column column-4">
+						$$t_{n+1} = \frac{1}{W} \sum_{i=n-W+1}^{n} t_i$$
+					</p>
+				</div>
+
+				<aside class="notes">
+					<p>
+						...suppose we want to "predict" the temperature tomorrow. A naive approach would be to predict that the temperature tomorrow is whatever the temperature is today.
+					</p>
+					<p>
+						Our naive approach can be expressed mathematically as t_{n+1} = t_{n}, which is a way of saying that, for a given day n+1, the temperature should equal the temperature of the previous day. This equation is our model.
+					</p>
+					<p>
+						However, we might, perhaps rightly, believe that this naive approach might not be as accurate as we would like due to day-to-day temperature variability (i.e., noise).
+					</p>
+					<p>
+						For example, an anomalous weather pattern may lead to extreme variation, such as a very warm day followed by a very cold day, but, for most climates, such extreme variability would not be "normal".
+					</p>
+					<p>
+						So, one possible refinement would be to predict that the temperature tomorrow is the average temperature of the past, say, 7 days.
+					</p>
+					<p>
+						By taking the average, we will "smooth" out some of the day-to-day variability and hopefully have a more reliable estimate over the long term.
+					</p>
+					<p>
+						In other words, by using the average temperature of the previous 7 days to predict tomorrow's temperature, our predictions will be closer (i.e., have a smaller <strong>error</strong>), on average, to the actual temperature than had we used our naive model.
+					</p>
+					<p>
+						We can generalize our model by using the parameter W which represents the number of days we want to average over.
+					</p>
+					<p>
+						In this example, the "model" is the mathematical formula describing the computation of the average temperature. That model is "trained" by giving the model data (e.g., the temperature for each of the past 7 days). In this case, the output of the trained model is a single value, which we then use to "predict" tomorrow's temperature.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Training Algorithms</h2>
+
+				<div class="row">
+					<ul class="column column-12">
+						<li class="fragment"><strong>Batch</strong>: build a model from a "batch" of data</li>
+						<li class="fragment"><strong>Incremental</strong>: continuously update a model as data arrives</li>
+						<li class="fragment"><strong>Mini-batch</strong>: hybrid of batch and incremental training.</li>
+					</ul>
+				</div>
+
+				<aside class="notes">
+					<p>
+						How we train machine learning algorithms comes in three varieties.
+					</p>
+					<p>
+						The first is "batch". Batch training means training a model over an entire dataset. In order to accommodate new data, we must re-train our model by performing batch training over the entire updated data set.
+					</p>
+					<p>
+						Many "big data"/map-reduce style algorithms (e.g., such as those run on Hadoop) are of this variety.
+					</p>
+					<p>
+						The second is "incremental". Incremental training means training a model incrementally, one datum at a time. Such an approach allows one to continuously update a model as data arrives, without having to re-train over the entire data set.
+					</p>
+					<p>
+						The third is mini-batch, which is a hybrid of batch and incremental. In this variety, we buffer data and train models in small batches.
+					</p>
+					<p>
+						The primary motivation for mini-batch is the ability to achieve some of the robustness of batch training with a reasonably close approximation of the immediacy of incremental training (i.e., mini-batch can achieve "near real-time").
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Real-Time Machine Learning</h2>
+
+				<aside class="notes">
+					<p>
+						I define real-time machine learning as the subset of machine learning algorithms which support incremental training. I.e., as a new datum arrives, I can update my model incrementally. Meaning, in order to generate a new prediction, I don't need to <strong>store</strong> and analyze <strong>all</strong> past prior events.
+					</p>
+					<p>
+						Commonly, perhaps due to marketing departments, you'll see machine learning approaches and technologies labeled as "real-time". These approaches are more accurately described as "near real-time", in which, due to distributed computing strategies and/or parallelization, they allow for re-training and analysis to be done more quickly than traditional batch analysis.
+					</p>
+					<p>
+						My definition excludes these near real-time approaches.
+					</p>
+					<p>
+						Why this limited definition? Because I find incremental machine learning algorithms particularly compelling, especially when used in browser environments.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2>The End</h2>
+			</section>
+
+		</div>
+
+	</div>
+
+	<footer>
+		<a href="https://github.com/kgryte"><i class="fa fa-github"></i> Athan Reines</a> | <a href="https://twitter.com/kgryte"><i class="fa fa-twitter"></i> @kgryte</a> | <a href="https://twitter.com/stdlibjs"><i class="fa fa-twitter"></i> @stdlibjs</a>
+	</footer>
+
+	<script src="js/lib/reveal/head.min.js"></script>
+	<script src="js/lib/reveal/reveal.js"></script>
+	<script src="js/lib/reveal/init.js"></script>
+	<script src="js/script.js"></script>
+</body>
+</html>
