@@ -1,4 +1,9 @@
 
+body {
+	background-image: url("../img/mlcon_2018_template_2048x1536_47881_v1b.png");
+	background-size: cover;
+	background-position: bottom;
+}
 
 .reveal a {
 	color: #222;
@@ -77,11 +82,13 @@ header {
 	position: fixed;
 	bottom: 10px;
 	left: 0;
+	background-color: rgba(255,255,255,0.3);
+	box-shadow: 0 0 20px 20px rgba(255,255,255,0.4);
 }
 
 footer {
 	position: fixed;
-	bottom: 40px;
+	top: 20px;
 	right: 40px;
 }
 

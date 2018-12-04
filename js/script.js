@@ -6,6 +6,7 @@
 	var header = document.querySelector( 'header' );
 	var footer = document.querySelector( 'footer' );
 	var title = document.querySelector( '#title-slide' );
+	var mlsplash = document.querySelector( '#mlconf-splash' );
 	var presplash = document.querySelector( '#pre-splash' );
 	var splash = document.querySelector( '#splash' );
 	var banner = document.querySelector( '#banner' );
@@ -20,6 +21,7 @@
 		if (
 			event.currentSlide === banner ||
 			event.currentSlide === splash ||
+			event.currentSlide === mlsplash ||
 			event.currentSlide === presplash ||
 			event.currentSlide === title
 		) {
@@ -41,6 +43,7 @@
 		if (
 			event.currentSlide === banner ||
 			event.currentSlide === splash ||
+			event.currentSlide === mlsplash ||
 			event.currentSlide === presplash ||
 			event.currentSlide === title
 		) {
@@ -49,6 +52,7 @@
 		} else if (
 			event.previousSlide === banner ||
 			event.previousSlide === splash ||
+			event.previousSlide === mlsplash ||
 			event.previousSlide === presplash ||
 			event.previousSlide === title
 		) {
