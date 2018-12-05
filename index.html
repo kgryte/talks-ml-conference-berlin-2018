@@ -124,6 +124,8 @@
 						<li class="fragment">JavaScript</li>
 						<li class="fragment">Examples</li>
 						<li class="fragment">Libraries and Frameworks</li>
+						<li class="fragment">Web Standards</li>
+						<li class="fragment">Tips and Tricks</li>
 						<li class="fragment">Conclusions</li>
 					</ol>
 				</div>
@@ -146,7 +148,13 @@
    							I'll then highlight a few promising libraries and frameworks for browser-based machine learning.
    						</li>
    						<li>
-   							And finally, I will offer some conclusions and additional resources you can use to get started running machine learning algorithms in the browser.
+   							Next, I'll discuss what is happening at the standards level which is making the web platform a better environment for machine learning.
+   						</li>
+   						<li>
+   							Then, I'll offer some tips and tricks.
+   						</li>
+   						<li>
+   							And finally, I will offer some conclusions and additional resources you can use to get up and running.
    						</li>
    					</ul>
 					<p>
@@ -485,7 +493,7 @@
 						Tensorflow.js aims to bring the power of Tensorflow to JavaScript environments, allowing you to train and deploy machine learning models in web browsers and Node.js.
 					</p>
 					<p>
-						(...explore tensorflow examples on the tensorflow.js website...)
+						(...explore tensorflow examples--posenet and pacman--on the tensorflow.js website...)
 					</p>
 					<p>
 						A last tensorflow.js example is an Observable <a href="https://beta.observablehq.com/@nkreeger/visualizing-ml-training-using-tensorflow-js-and-baseball-d">notebook</a> for training a model on MLB strike data and then using the trained model to predict strikes.
@@ -522,11 +530,492 @@
 			</section>
 
 			<section class="center">
+				<aside class="notes">
+					(next slide)
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Web Standards</h2>
+
+				<aside class="notes">
+					<p>
+						Now that we have discussed libraries and frameworks for browser-based machine learning, I want to highlight recent developments at the standards level which is helping accelerate the development and evolution of machine learning on the web.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">WebAssembly</h2>
+
+				<aside class="notes">
+					<p>
+						One of the most well-publicized developments is WebAssembly.
+					</p>
+					<p>
+						Building of the collective efforts of the past 20 years, browser vendors came together to achieve consensus on binary format for the web.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<p>
+					A portable compilation target for the web
+				</p>
+
+				<aside class="notes">
+					<p>
+						In short, WebAssembly is a portable compilation target for the web.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<p>
+					Allows running languages other than JavaScript within browser environments
+				</p>
+
+				<aside class="notes">
+					<p>
+						And it allows running languages other than JavaScript within browser environments.
+					</p>
+					<p>
+						More specifically, the current focus is the ability to run statically compiled languages, such as C, C++, and Rust, within browser environments.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<p>C/C++&nbsp;&nbsp;&nbsp;→&nbsp;&nbsp;&nbsp;IR&nbsp;&nbsp;&nbsp;→&nbsp;&nbsp;&nbsp;wasm&nbsp;&nbsp;&nbsp;→&nbsp;&nbsp;&nbsp;x86/ARM</p>
+
+				<aside class="notes">
+					<p>
+						In a modern compiler pipeline, WebAssembly (abbreviated: wasm) resides after the intermediate representation.
+					</p>
+					<p>
+						In the shown pipeline, I begin with input source files. A frontend compiler compiles those source files to an intermediate representation.
+					</p>
+					<p>
+						A backend compiler takes the intermediate representation and compiles to WebAssembly.
+					</p>
+					<p>
+						The WebAssembly is subsequently passed to a JavaScript engine, either loaded over HTTP in a browser or read from the filesystem in Node.js.
+					</p>
+					<p>
+						The JavaScript engine then translates the WebAssembly to machine code specific to a host platform.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Two Formats</h2>
+
+				<aside class="notes">
+					<p>
+						WebAssembly has two formats: a binary encoding and a text format.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Text Format</h2>
+
+				<aside class="notes">
+					<p>
+						Let's begin with the text format.
+					</p>
+					<p>
+						WebAssembly defines a standardized text format that encodes a WebAssembly module with all its contained definitions in a way that is equivalent to the binary format.
+					</p>
+					<p>
+						As an example...
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<pre><code class="hljs lisp" contenteditable>
+(module
+  (type $0 (func (param i32 i32) (result i32)))
+  (export "add" $add)
+  (func $add (type $0) (param $var$0 i32) (param $var$1 i32) (result i32)
+    (i32.add
+      (get_local $var$0)
+      (get_local $var$1)
+    )
+  )
+)
+				</code></pre>
+
+				<aside class="notes">
+					<p>
+						...here is WebAssembly module which exports a single function "add" which adds two 32-bit integers and returns a 32-bit integer result.
+					</p>
+					<p>
+						Similar to LISP, the text format, commonly referred to as WAT, uses s-expressions for representing the program "tree".
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Value Types</h2>
+
+				<div class="fragment row">
+					<ul class="column column-2">&nbsp;</ul>
+					<ul class="column column-5">
+						<li>i32</li>
+						<li>f32</li>
+						<li>i64</li>
+						<li>f64</li>
+					</ul>
+				</div>
+
+				<aside class="notes">
+					<p>
+						Currently, WebAssembly only supports 4 value types, which are all numeric types: 32-bit integers, 32-bit single-precision floating-point numbers, 64-bit integers, and 64-bit double-precision floating-point numbers.
+					</p>
+					<p>
+						Any other value type must be constructed by manipulating raw memory. In practice, this means copying data to the module heap and using pointers.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Binary Encoding</h2>
+
+				<aside class="notes">
+					<p>
+						Now that we have a simple working example, let's discuss the binary format.
+					</p>
+					<p>
+						The binary format is a dense representation of a WebAssembly module.
+					</p>
+					<p>
+						As an example...
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<pre><code class="hljs text" contenteditable>
+00 61 73 6d 01 00 00 00  04 74 79 70 65 87 80 80  |.asm.....type...|
+80 00 01 40 02 01 01 01  01 08 66 75 6e 63 74 69  |...@......functi|
+6f 6e 82 80 80 80 00 01  00 06 6d 65 6d 6f 72 79  |on........memory|
+85 80 80 80 00 80 02 80  02 01 06 65 78 70 6f 72  |...........expor|
+74 86 80 80 80 00 01 00  03 61 64 64 04 63 6f 64  |t........add.cod|
+65 8c 80 80 80 00 01 86  80 80 80 00 00 14 00 14  |e...............|
+01 40 04 6e 61 6d 65 86  80 80 80 00 01 03 61 64  |.@.name.......ad|
+64 00                                             |d.|
+				</code></pre>
+
+				<aside class="notes">
+					<p>
+						...here is same WebAssembly module we saw in text format represented in binary format.
+					</p>
+					<p>
+						If we convert the Hex to a string (right side), we can see that the module is comprised of 6 sections.
+					</p>
+					<ul>
+						<li>preamble</li>
+						<li>type</li>
+						<li>function</li>
+						<li>memory</li>
+						<li>export</li>
+						<li>code</li>
+						<li>name</li>
+					</ul>
+					<p>
+						Each section begins with the name of the section, followed by the total number of bytes comprising that section.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Memory Access</h2>
+
+				<div class="row">
+					<ul class="column column-5">
+						<li>i32.load8_s (signed)</li>
+						<li>i32.load8_u (unsigned)</li>
+						<li>i32.load16_s</li>
+						<li>i32.load16_u</li>
+						<li>i32.load</li>
+						<li>i64.load8_s</li>
+						<li>i64.load8_u</li>
+						<li>i64.load16_s</li>
+						<li>i64.load16_u</li>
+						<li>i64.load32_s</li>
+						<li>i64.load32_u</li>
+					</ul>
+					<ul class="column column-3">
+						<li>i64.load</li>
+						<li>f32.load</li>
+						<li>f64.load</li>
+						<li>i32.store8</li>
+						<li>i32.store16</li>
+						<li>i32.store</li>
+						<li>i64.store8</li>
+						<li>i64.store16</li>
+						<li>i64.store32</li>
+						<li>i64.store</li>
+						<li>f32.store</li>
+					</ul>
+					<ul class="column column-3">
+						<li>f64.store</li>
+					</ul>
+				</div>
+
+				<aside class="notes">
+					Linear memory access is accomplished with explicit store and load operators.
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Control Constructs</h2>
+
+				<div class="row">
+					<ul class="column column-2">&nbsp;</ul>
+					<ul class="column column-5">
+						<li>nop</li>
+						<li>block</li>
+						<li>loop</li>
+						<li>if</li>
+						<li>else</li>
+						<li>br</li>
+						<li>br_if</li>
+						<li>br_table</li>
+						<li>return</li>
+						<li>end</li>
+					</ul>
+				</div>
+
+				<aside class="notes">
+					WebAssembly offers basic control flow constructs, such as ifs, loops, and blocks.
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Operators</h2>
+
+				<div class="row">
+					<ul class="column column-2">&nbsp;</ul>
+					<ul class="column column-5">
+						<li>i32.add</li>
+						<li>i32.sub</li>
+						<li>i32.mul</li>
+						<li>i32.div_s</li>
+						<li>i32.div_u</li>
+						<li>i32.rem_s</li>
+						<li>i32.rem_u</li>
+						<li>i32.and</li>
+						<li>...<a href="http://webassembly.org/docs/semantics/#32-bit-integer-operators">many more</a></li>
+					</ul>
+				</div>
+
+				<aside class="notes">
+					<p>
+						The current WebAssembly specification defines many operators and functions for data type conversion, truncation, reinterpretation, promotion, and demotion.
+					</p>
+					<p>
+						Here, I am listing operators for 32-bit integers. For the complete list of operators, see the specification.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Advantages</h2>
+
+				<div class="fragment row">
+					<ul class="column column-2">&nbsp;</ul>
+					<ul class="column column-5">
+						<li>Compact</li>
+						<li>Parsing</li>
+						<li>Typed</li>
+						<li>Optimization</li>
+						<li>Deoptimization</li>
+						<li>Lower-level</li>
+						<li>GC</li>
+						<li>Performance</li>
+					</ul>
+				</div>
+
+				<aside class="notes">
+					<p>
+						WebAssembly has several stated advantages...
+					</p>
+					<ul>
+						<li>
+							First, the binary format is compact, which means fewer bytes must be sent across a network and faster load times.
+						</li>
+						<li>
+							Next, because the binary format is structured, having a defined layout, module loaders need to only perform a single-pass in order to parse an encoded module into an AST in preparation for translating to machine code. The advantage of only requiring a single-pass is that modules can be instantiated faster compared to a module written in vanilla JavaScript.
+						</li>
+						<li>
+							Third, WebAssembly is strongly typed, which means more efficient serialization and, again, fewer bytes sent across a network.
+						</li>
+						<li>
+							<p>
+								Next, because WebAssembly is strongly typed, compilers are able to perform ahead-of-time optimizations. This is in contrast to JavaScript, for instance, which first must be compiled and monitored to determine if particular functions are running "hot".
+							</p>
+							<p>
+								Once a function is "hot", the function is sent to an optimizing compiler which makes optimistic assumptions about input value types and code paths, essentially creating an optimized version of the "hot" function.
+							</p>
+							<p>
+								If a function receives an unexpected input value type, the optimized function is de-optimized and the cycle repeats indefinitely or until a function is put in "deoptimization hell".
+							</p>
+							<p>
+								So instead of runtime optimization, with WebAssembly, we can perform the optimization an optimizing compiler does before ever running in a JavaScript runtime.
+							</p>
+						</li>
+						<li>
+							Next, because WebAssembly is strongly typed, we are able to avoid de-optimizing cycles as the optimization/deoptimization loop is no longer needed: input and output value types are defined ahead-of-time and not something a runtime compiler must empirically discover.
+						</li>
+						<li>
+							Another advantage is that WebAssembly is lower-level, which means that WebAssembly is easier to translate to efficient and optimized machine instructions, which means faster execution.
+						</li>
+						<li>
+							<p>
+								Next, WebAssembly does not currently come with a garbage collector, which means that WebAssembly modules are responsible for manually managing memory. This is useful as this allows control over when memory is allocated and deallocated, as you might want to during "deadtime", i.e., when an application is running idle.
+							</p>
+							<p>
+								On the flip side, the lack of GC also means that languages which depend on a GC cannot be easily compiled to WebAssembly (e.g., Python, et al).
+							</p>
+						</li>
+						<li>
+							If we combine all of these advantages, WebAssembly promises, for certain applications, better performance compared to JavaScript.
+						</li>
+				</aside>
+			</section>
+
+			<section class="center">
+				<pre><code class="hljs c" contenteditable>
+// File: dasum.c
+#include &lt;math.h&gt;
+
+double c_dasum( const int N, const double *X, const int stride ) {
+    double sum;
+    int m;
+    int n;
+    int i;
+
+    sum = 0.0;
+    if ( N &lt;= 0 || stride &lt;= 0 ) {
+        return sum;
+    }
+    // If the stride is equal to `1`, use unrolled loops...
+    if ( stride == 1 ) {
+        m = N % 6;
+
+        // If we have a remainder, run a clean-up loop...
+        if ( m > 0 ) {
+            for ( i = 0; i &lt; m; i++ ) {
+                sum += fabs( X[i] );
+            }
+        }
+        if ( N &lt; 6 ) {
+            return sum;
+        }
+        for ( i = m; i &lt; N; i += 6 ) {
+            sum += fabs( X[i] ) + fabs( X[i+1] ) + fabs( X[i+2] ) + fabs( X[i+3] ) + fabs( X[i+4] ) + fabs( X[i+5] );
+        }
+        return sum;
+    }
+    n = N * stride;
+    for ( i = 0; i &lt; n; i += stride ) {
+        sum += fabs( X[i] );
+    }
+    return sum;
+}
+				</code></pre>
+
+				<aside class="notes">
+					<p>
+						To demonstrate the performance advantages, here is a BLAS function, which computes the sum of absolute values over a strided array.
+					</p>
+					<p>
+						If we compile to WebAssembly and run benchmarks, we get the following results...
+					</p>
+				</aside>
+			</section>
+
+			<section class="center" data-transition="slide-in slide-out" data-transition-speed="default">
+				<table>
+					<thead>
+						<tr>
+							<th>Length</th>
+							<th>JavaScript</th>
+							<th>wasm</th>
+							<th>Native</th>
+							<th>Perf</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>10</td>
+							<td>22,438,020</td>
+							<td>18,226,375</td>
+							<td>7,084,870</td>
+							<td>2.57x</td>
+						</tr>
+						<tr>
+							<td>100</td>
+							<td>4,350,384</td>
+							<td>6,428,586</td>
+							<td>6,428,626</td>
+							<td>1.0x</td>
+						</tr>
+						<tr>
+							<td>1,000</td>
+							<td>481,417</td>
+							<td>997,234</td>
+							<td>3,289,090</td>
+							<td>0.30x</td>
+						</tr>
+						<tr>
+							<td>10,000</td>
+							<td>28,186</td>
+							<td>110,540</td>
+							<td>355,172</td>
+							<td>0.31x</td>
+						</tr>
+						<tr>
+							<td>100,000</td>
+							<td>1,617</td>
+							<td>11,157</td>
+							<td>30,058</td>
+							<td>0.37x</td>
+						</tr>
+						<tr>
+							<td>1,000,000</td>
+							<td>153</td>
+							<td>979</td>
+							<td>1,850</td>
+							<td>0.53x</td>
+						</tr>
+					</tbody>
+				</table>
+				<aside class="notes">
+					<p>
+						Note that native is hardware optimized BLAS.
+					</p>
+					<p>
+						Note when compared to native add-on implementing reference BLAS that performance is the basically the same (i.e., wasm matches native performance).
+					</p>
+					<p>
+						However, native add-ons have a significant advantage of being able to utilize hardware optimized libraries. Hardware optimized libraries will win every time.
+					</p>
+					<p>
+						For server environments, WebAssembly is <strong>NOT</strong> a replacement for Node.js native add-ons.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
 				<h2 class="no-text-transform">Tips and Tricks</h2>
 
 				<ul>
-					<li class="fragment">Simulation</li>
-					<li class="fragment">Exploratory Data Analysis</li>
+					<li class="fragment">Avoid Built-ins</li>
+					<li class="fragment">Read the Source!</li>
 					<li class="fragment">Data Structures</li>
 					<ul>
 						<li class="fragment">ndarray</li>
@@ -541,16 +1030,28 @@
 						So...tips and tricks. The following tips are generally applicable regardless of whether a machine learning algorithm is written and used in JavaScript.
 					</p>
 					<p>
-						The first tip is to use <strong>simulation</strong> to generate synthetic datasets to run against machine learning algorithms so you better understand an algorithm's capabilities and limitations.
+						The first tip is to avoid built-in mathematical functions (i.e., those mathematical functions which are defined by the ECMAScript standard and part of JavaScript's built-in standard library).
 					</p>
 					<p>
-						Next, <strong>always</strong>, <strong>always</strong>, <strong>always</strong> perform exploratory data analysis.
+						For a variety of historical reasons, the built-in implementations are ill-defined (allowing browser vendors to make trade-offs between speed and accuracy) and commonly have bugs.
 					</p>
 					<p>
-						This means exploring your data by plotting and performing basic analyses in order to get a "feel" for your data and to test any basic assumptions (e.g., as we did when testing that the network sensor data is normally distributed).
+						Since one cannot specify the exact environment version in which browser-based machine learning algorithms will run (i.e., your users may have browsers spanning from the ancient to the most recent, with everything in between), if you want to ensure reproducibility of even the most basic mathematical operations, use community libraries, such as stdlib.
 					</p>
 					<p>
-						Next, while true in general, but especially for real-time machine learning, what makes algorithms performant are two things.
+						Second, the ecosystem for browser-based numerical, scientific, and machine learning libraries is in significant flux, with no clear "winner" among many contenders.
+					</p>
+					<p>
+						Accordingly, in order to ensure that you use quality implementations, you currently <strong>cannot</strong> rely on proxies for assessing quality, such as stars and downloads.
+					</p>
+					<p>
+						Especially within the JavaScript community, libraries and frameworks are born and die every day, with significant hype-driven herding propelling library adoption.
+					</p>
+					<p>
+						The most reliable approach for assessing whether to use a library is by <strong>reading. the. source.</strong>
+					</p>
+					<p>
+						Next, while true in general, but especially for machine learning, what makes algorithms performant are two things.
 					</p>
 					<p>
 						The first is using the right data structure.
@@ -559,16 +1060,16 @@
 						One such data structure is n-dimensional arrays (ndarrays), which are single-segment contiguous blocks of memory. These data structures allow for more efficient cache optimization.
 					</p>
 					<p>
-						Another common data structure is a circular buffer. While the textbook definition is simple, these need to be implemented carefully in order to avoid poor memory management, especially when implementing them in JavaScript.
+						Another common data structure for real-time machine learning algorithms is a circular buffer. While the textbook definition is simple, these need to be implemented carefully in order to avoid poor memory management, especially when implementing them in JavaScript.
 					</p>
 					<p>
-						Certain real-time algorithms require specialized tree data structures, such as quantile approximation.
+						Certain machine learning algorithms, and, in particular, real-time algorithms, require specialized tree data structures. One such algorithm is quantile approximation.
 					</p>
 					<p>
 						The second is using the right algorithm.
 					</p>
 					<p>
-						One example where using the right algorithm is critical is quantile approximation. A naive approach would require storing all data in memory and sorting the data each time a new data arrives.
+						One example where using the right algorithm is critical is, again, quantile approximation. A naive approach would require storing all data in memory and sorting the data each time a new data arrives.
 					</p>
 					<p>
 						A better approach is use an approximate method which uses a tree data structure and an acceptable error rate.
@@ -596,12 +1097,13 @@
 						<li class="fragment">JavaScript</li>
 						<li class="fragment">Data Structures</li>
 						<li class="fragment">Algorithms</li>
+						<li class="fragment">Get Involved!</li>
 					</ul>
 				</div>
 
 				<aside class="notes">
 					<p>
-						There are 3 points I want you to remember from this talk...
+						There are 4 points I want you to remember from this talk...
 					</p>
 					<ol>
 						<li>
@@ -612,6 +1114,9 @@
 						</li>
 						<li>
 							Third, machine learning algorithms require using the right algorithm.
+						</li>
+						<li>
+							Last, get involved! People are building the future of machine learning on the web, and we need people like you to continue making that future possible. That means contributing to open-source libraries, writing Observable notebooks to showcase new and interesting machine learning applications, and getting your companies to help sponsor, either through developer time or funding, machine learning development for the web.
 						</li>
 					</ol>
 				</aside>
@@ -627,7 +1132,7 @@
 				<h2 class="no-text-transform">Thank you!</h2>
 
 				<aside class="notes">
-
+					...and with that, thank you!
 				</aside>
 			</section>
 
