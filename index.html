@@ -354,12 +354,6 @@
 			</section>
 
 			<section class="center">
-				<aside class="notes">
-					(next slide)
-				</aside>
-			</section>
-
-			<section class="center">
 				<h2 class="no-text-transform">Anomaly Detection</h2>
 
 				<aside class="notes">
@@ -420,6 +414,101 @@
 			<section class="center">
 				<aside class="notes">
 					(next slide)
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Libraries and Frameworks</h2>
+
+				<aside class="notes">
+					<p>
+						At this point, I want to highlight various libraries and frameworks for browser-based machine learning.
+					</p>
+					<p>
+						We have already seen one such library: stdlib, a project of which I am part. But there are others worth noting.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Observable</h2>
+
+				<ul class="fragment">
+					<li><a href="https://beta.observablehq.com/@rreusser/domain-coloring-for-complex-functions">Domain Coloring</a></li>
+					<li><a href="https://beta.observablehq.com/@gcalmettes/routes-to-chaos">Routes to Chaos</a></li>
+					<li><a href="https://beta.observablehq.com/@patternleaf/federal-budget-in-a-bottle">Federal Budget</a></li>
+				</ul>
+
+				<aside class="notes">
+					<p>
+						The first is Observable, a reactive notebook environment which exclusively leverages the web platform.
+					</p>
+					<p>
+						Similar to Jupyter notebooks, one can use Observable to create interactive notebooks which interleave prose and code, aiding exploration and analysis.
+					</p>
+					<p>
+						To showcase a few examples...
+					</p>
+					<p>
+						The first of which is a <a href="https://beta.observablehq.com/@rreusser/domain-coloring-for-complex-functions">notebook</a> which explores techniques for visualizing complex functions.
+					</p>
+					<p>
+						The next <a href="https://beta.observablehq.com/@gcalmettes/routes-to-chaos">notebook</a> explores chaotic systems.
+					</p>
+					<p>
+						The last <a href="https://beta.observablehq.com/@patternleaf/federal-budget-in-a-bottle">notebook</a> allows you to better reason about the US Federal Budget, by mapping budget expenditures to equivalent amounts in your monthly budget.
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform"><a href="https://js.tensorflow.org/">Tensorflow.js</a></h2>
+
+				<ul class="fragment">
+					<li><a href="https://beta.observablehq.com/@nkreeger/visualizing-ml-training-using-tensorflow-js-and-baseball-d">Predicting Strikes</a></li>
+				</ul>
+
+				<aside class="notes">
+					<p>
+						Another library is tensorflow.js, a machine learning library being actively developed by a team within Google Brain.
+					</p>
+					<p>
+						Tensorflow.js aims to bring the power of Tensorflow to JavaScript environments, allowing you to train and deploy machine learning models in web browsers and Node.js.
+					</p>
+					<p>
+						(...explore tensorflow examples on the tensorflow.js website...)
+					</p>
+					<p>
+						A last tensorflow.js example is an Observable <a href="https://beta.observablehq.com/@nkreeger/visualizing-ml-training-using-tensorflow-js-and-baseball-d">notebook</a> for training a model on MLB strike data and then using the trained model to predict strikes.
+
+						(...watch the live demo...)
+					</p>
+				</aside>
+			</section>
+
+			<section class="center">
+				<h2 class="no-text-transform">Apache Arrow</h2>
+
+				<ul class="fragment">
+					<li><a href="https://beta.observablehq.com/@theneuralbit/using-apache-arrow-js-with-large-datasets">Large Datasets</a></li>
+				</ul>
+
+				<aside class="notes">
+					<p>
+						The last library I want to highlight is Apache Arrow.
+					</p>
+					<p>
+						Apache Arrow specifies a <strong>standardized language-independent</strong> columnar memory format for flat and hierarchical data, organized for efficient analytic operations on modern hardware.
+					</p>
+					<p>
+						One of the main goals of Apache Arrow is to provide a common data format which can be used across environments and language, thus avoiding data serialization and deserialization costs.
+					</p>
+					<p>
+						To demonstrate using Apache Arrow in browser environments, we can open another Observable <a href="https://beta.observablehq.com/@theneuralbit/using-apache-arrow-js-with-large-datasets">notebook</a> which showcases how to use Apache Arrow with large datasets.
+					</p>
+					<p>
+						In this notebook, we can readily load and manipulate a few hundred thousand records--in this case, Chicago crime statistics--all within the browser environment.
+					</p>
 				</aside>
 			</section>
 
