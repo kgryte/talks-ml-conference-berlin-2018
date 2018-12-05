@@ -120,8 +120,10 @@
 						&nbsp;
 					</ul>
 					<ol class="column column-8">
-						<li class="fragment">Intro</li>
-						<li class="fragment">TODO</li>
+						<li class="fragment">Motivation</li>
+						<li class="fragment">JavaScript</li>
+						<li class="fragment">Examples</li>
+						<li class="fragment">Libraries and Frameworks</li>
 						<li class="fragment">Conclusions</li>
 					</ol>
 				</div>
@@ -132,7 +134,16 @@
 					</p>
 					<ul>
    						<li>
-   							First, I will TODO...
+   							First, I will motivate why machine learning in browser environments is important and why you should care.
+   						</li>
+   						<li>
+   							Next, as this talk concerns machine learning in the browser, I will discuss JavaScript as it relates to machine learning.
+   						</li>
+   						<li>
+   							Then, I will walk through some browser-based machine learning examples.
+   						</li>
+   						<li>
+   							I'll then highlight a few promising libraries and frameworks for browser-based machine learning.
    						</li>
    						<li>
    							And finally, I will offer some conclusions and additional resources you can use to get started running machine learning algorithms in the browser.
@@ -169,19 +180,19 @@
 						Why is machine learning in the browser exciting?
 					</p>
 					<p>
-						Running machine learning algorithms in the browser, and, in particular, incremental machine learning algorithms, allows for model <strong>training</strong> and <strong>prediction</strong>/<strong>classification</strong> to happen concurrently. I don't need to decouple these two aspects: training and prediction.
+						Running machine learning algorithms in the browser allows for localized model <strong>training</strong> and <strong>prediction</strong>/<strong>classification</strong>. I don't need to decouple these two aspects: training and prediction.
 					</p>
 					<p>
 						Meaning, in practice, for particular types of problems, I do not need dedicated infrastructure or processes/threads for training and separate infrastructure for prediction.
 					</p>
 					<p>
-						Often, incremental algorithms have low memory footprints, making them suitable for resource limited devices.
+						Not only does this stand in contrast to traditional "big data" architectures, but this also stands in notable contrast to environments such as Jupyter notebooks, which effectively make the browser a glorified RPC client and require a backend server architecture to actually receive and execute commands.
 					</p>
 					<p>
-						Why is this important? For the following reasons...
+						Why is this distinction important? For the following reasons...
 					</p>
 					<p>
-						Privacy. Running machine learning algorithms in browser environments allows data to stay on-device. For example, health and fitness trackers, such as the Apple Watch, now have APIs which allow you to access heart beat data. With incremental machine learning, I can train a model (i.e., learn a user's "normal" heart beat pattern) and then detect when a heart beat, or set of heart beats, no longer fits this pattern. In this scenario, I never have to send this data to remote servers.
+						Privacy. Running machine learning algorithms in browser environments allows data to stay on-device. For example, health and fitness trackers, such as the Apple Watch, now have APIs which allow you to access heart beat data. By running incremental machine learning algorithms on-device, I can train a model (i.e., learn a user's "normal" heart beat pattern) and then detect when a heart beat, or set of heart beats, no longer fits this pattern. In this scenario, I never have to send this data to remote servers.
 					</p>
 					<p>
 						Because I don't have to send data to remote servers, analysis has low latency, works offline, and can be more power efficient.
@@ -236,7 +247,10 @@
 						What can machine learning in browser environments allow you to do?
 					</p>
 					<p>
-						The short answer is most everything you can do in non-browser environments.
+						The short answer is most everything you can do in non-browser environments. The main exception being the batch analysis of data of sufficient scale to be impractical for a single device.
+					</p>
+					<p>
+						As particularly concerns browser environments...
 					</p>
 					<p>
 						For the UI interaction data we discussed in the previous slide, such as cursor movement and scrolling, we can generate a prediction as to what resource a user will most likely need next, allowing us to create what would feel like a faster and more responsive UI.
@@ -248,7 +262,7 @@
 						Another classic use case is anomaly detection, such as detecting a malfunctioning system or fraudulent activity. In this classification task, we want to detect when a datum, or set of datums, is different than the rest.
 					</p>
 					<p>
-						The sooner you are able to classify new data as "anomalous", the sooner you can fix a potential problem.
+						The sooner we are able to classify new data as "anomalous", the sooner we can fix a potential problem.
 					</p>
 					<p>
 						A third use case is clustering, which is the process of assigning groups.
@@ -288,7 +302,7 @@
 
 				<aside class="notes">
 					<p>
-						The first myth is poor performance. As part of our work on stdlib, we have run the benchmarks. You can run them yourself. They are publicly available.
+						The first myth is poor performance. As part of our work on stdlib, we have written and run the benchmarks. You can run them yourself. They are publicly available.
 					</p>
 					<p>
 						JavaScript environments are just as fast as, and more often than not, faster than, Python and easily faster than R.
@@ -321,7 +335,7 @@
 						In short, many of those who say math cannot be done in JavaScript seem to have various preconceptions which are not grounded in reality and most likely have never written mathematical libraries.
 					</p>
 					<p>
-						The <strong>primary</strong> reason why people do not currently do mathematical computation in JavaScript is that other ecosystems already have a critical mass of libraries and frameworks for doing mathematical computation.
+						The <strong>primary</strong> reason why people do not currently do mathematical computation in JavaScript (and, by association, browser environments) is that other ecosystems already have a critical mass of libraries and frameworks for doing mathematical computation.
 					</p>
 					<p>
 						The issue is not one of technical limitations, but one of community support--a problem that myself and colleagues are working to address with stdlib.
@@ -384,6 +398,12 @@
 					<p>
 						The third example is real-time regression.
 					</p>
+					<p>
+						As with the previous two examples, I've prepared an interactive Observable notebook.
+					</p>
+					<p>
+						For this notebook, we analyze Boston house prices.
+					</p>
 				</aside>
 			</section>
 
@@ -392,7 +412,7 @@
 
 				<aside class="notes">
 					<p>
-						The fourth example is real-time classification.
+						The fourth example is real-time classification. See stdlib.
 					</p>
 				</aside>
 			</section>
