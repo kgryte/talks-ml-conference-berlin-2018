@@ -542,6 +542,12 @@
 					<p>
 						In this notebook, we can readily load and manipulate a few hundred thousand records--in this case, Chicago crime statistics--all within the browser environment.
 					</p>
+					<p>
+						For those who are unimpressed and consider a few hundred thousand records to be "tiny", keep in mind two things: (1) when performing exploratory data analysis on large datasets, doing so on an entire dataset is impractical; rather, one commonly performs exploratory data analysis on a "representative" sample.
+					</p>
+					<p>
+						(2) in theory, while a browser does have memory limitations, it does also has access to close to half a user's hard drive. By appropriately leveraging in-browser databases and stream APIs, one can, under certain circumstances, readily analyze many gigabytes of data, entirely within a browser environment.
+					</p>
 				</aside>
 			</section>
 
@@ -665,7 +671,7 @@
 
 				<aside class="notes">
 					<p>
-						...here is WebAssembly module which exports a single function "add" which adds two 32-bit integers and returns a 32-bit integer result.
+						...here is a WebAssembly module which exports a single function "add" which adds two 32-bit integers and returns a 32-bit integer result.
 					</p>
 					<p>
 						Similar to LISP, the text format, commonly referred to as WAT, uses s-expressions for representing the program "tree".
@@ -726,7 +732,7 @@
 
 				<aside class="notes">
 					<p>
-						...here is same WebAssembly module we saw in text format represented in binary format.
+						...here is the same WebAssembly module we saw in text format represented in binary format.
 					</p>
 					<p>
 						If we convert the Hex to a string (right side), we can see that the module is comprised of 6 sections.
@@ -1067,7 +1073,7 @@ double c_dasum( const int N, const double *X, const int stride ) {
 						So...tips and tricks. The following tips are generally applicable regardless of whether a machine learning algorithm is written and used in JavaScript.
 					</p>
 					<p>
-						The first tip is to avoid built-in mathematical functions (i.e., those mathematical functions which are defined by the ECMAScript standard and part of JavaScript's built-in standard library).
+						The first tip, which is perhaps most applicable to JavaScript, is to avoid built-in mathematical functions (i.e., those mathematical functions which are defined by the ECMAScript standard and part of JavaScript's built-in standard library).
 					</p>
 					<p>
 						For a variety of historical reasons, the built-in implementations are ill-defined (allowing browser vendors to make trade-offs between speed and accuracy) and commonly have bugs.
