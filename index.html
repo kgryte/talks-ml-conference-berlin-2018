@@ -546,7 +546,7 @@
 						For those who are unimpressed and consider a few hundred thousand records to be "tiny", keep in mind two things: (1) when performing exploratory data analysis on large datasets, doing so on an entire dataset is impractical; rather, one commonly performs exploratory data analysis on a "representative" sample.
 					</p>
 					<p>
-						(2) in theory, while a browser does have memory limitations, it does also has access to close to half a user's hard drive. By appropriately leveraging in-browser databases and stream APIs, one can, under certain circumstances, readily analyze many gigabytes of data, entirely within a browser environment.
+						(2) in theory, while a browser does have memory limitations, it does also have access to close to half a user's hard drive. By appropriately leveraging in-browser databases and stream APIs, one can, under certain circumstances, readily analyze many gigabytes of data, entirely within a browser environment.
 					</p>
 				</aside>
 			</section>
@@ -612,7 +612,10 @@
 
 				<aside class="notes">
 					<p>
-						In a modern compiler pipeline, WebAssembly (abbreviated: wasm) resides after the intermediate representation.
+						Modern compilers are comprised of two components: a frontend compiler, which takes a higher level language like C and compiles it to an intermediate representation, and a backend compiler which takes an intermediate representation and compiles it to machine-specific instructions.
+					</p>
+					<p>
+						Accordingly, in a modern compiler pipeline, WebAssembly (abbreviated: wasm) resides after the intermediate representation.
 					</p>
 					<p>
 						In the shown pipeline, I begin with input source files. A frontend compiler compiles those source files to an intermediate representation.
